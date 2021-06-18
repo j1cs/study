@@ -23,66 +23,73 @@ public class Application {
         );
 
         List<String> coinList = coins.stream().map(coin -> String.valueOf(coin.getValue())).collect(Collectors.toList());
-        System.out.println("Welcome!");
-        System.out.println("You can choose:");
-        for (Product p : products) {
-            System.out.printf("%s $%d%n", p.getName(), p.getPrice());
-        }
-        String acceptedCoins = String.join(",", coinList);
-        System.out.println();
         Scanner scanned = new Scanner(System.in);
-        System.out.println("Insert Coin");
-        System.out.printf("We accepts: %s cents%n", acceptedCoins);
         String option = "0";
         int coin = 0;
-        while (true) {
-            if (option.equalsIgnoreCase("n")) {
-                System.out.println("See ya!");
-                if (coin > 0)
-                    System.out.printf("Your refund $%d%n", coin);
-                break;
+        while(!option.equalsIgnoreCase("exit")) {
+            clean();
+            System.out.println("Welcome!");
+            System.out.println("You can choose:");
+            for (Product p : products) {
+                System.out.printf("%s $%d%n", p.getName(), p.getPrice());
             }
-
-            if (coin >= 25 && option.equalsIgnoreCase("y"))
-                break;
-            if (coin < 25 && option.equalsIgnoreCase("y")) {
-                System.out.println("You need to insert more coins to buy a product");
-                System.out.printf("Credit $%s%n", coin);
-            }
-            if (coinList.contains(option)) {
-                coin += Integer.parseInt(option);
-                System.out.printf("Credit $%s%n", coin);
-                System.out.print("You can add more coins or ");
-                System.out.println("if you want the product press \"y\"");
-            }
-            if (!coinList.contains(option) && !option.equalsIgnoreCase("0")) {
-                if (coin > 0)
+            String acceptedCoins = String.join(",", coinList);
+            System.out.println();
+            System.out.println("Insert Coin");
+            System.out.printf("We accepts: %s cents%n", acceptedCoins);
+            while (true) {
+                if (option.equalsIgnoreCase("n"))
+                    break;
+                if (coin >= 25 && option.equalsIgnoreCase("y"))
+                    break;
+                if (coin < 25 && option.equalsIgnoreCase("y")) {
+                    System.out.println("You need to insert more coins to buy a product");
+                }
+                if (coinList.contains(option)) {
+                    coin += Integer.parseInt(option);
                     System.out.printf("Credit $%s%n", coin);
-                System.out.printf("We only accept: %s cents%n", acceptedCoins);
+                    System.out.print("You can add more coins or ");
+                    System.out.println("if you want the product press \"y\"");
+                } else if (!coinList.contains(option) && !option.equalsIgnoreCase("0")) {
+                    if (coin > 0)
+                        System.out.printf("Credit $%s%n", coin);
+                    System.out.printf("We only accept: %s cents%n", acceptedCoins);
+                }
+                System.out.println("if you want to cancel press \"n\"");
+                if (scanned.hasNext())
+                    option = scanned.next();
             }
-            System.out.println("if you want to cancel press \"n\"");
-            if (scanned.hasNext())
-                option = scanned.next();
-        }
-        int item = 0;
-        while (true) {
-            if (option.equalsIgnoreCase("n")) {
-                System.out.println("See ya!");
-                if (coin > 0)
-                    System.out.printf("Your refund $%d%n", coin);
-                break;
-            } else if (!option.equalsIgnoreCase("y") && (item <= Integer.parseInt(option) && Integer.parseInt(option) >= item)) {
-                System.out.println("Please select a valid option");
-            }
-            System.out.println("Choose ");
-            for (int i = 0; i < products.size(); i++) {
-                item = i + 1;
-                System.out.printf("%d %s $%d%n", item, products.get(i).getName(), products.get(i).getPrice());
-            }
+            int item = 0;
+            while (true) {
+                if (option.equalsIgnoreCase("n")) {
+                    if (coin > 0)
+                        System.out.printf("Your refund $%d%n", coin);
+                    System.out.println("See ya!");
+                    break;
+                } else if (!option.equalsIgnoreCase("y") && (Integer.parseInt(option) <= 1 && Integer.parseInt(option) >= item)) {
+                    System.out.println("Please select a valid option");
+                } else if (!option.equalsIgnoreCase("y") && coin < products.get(Integer.parseInt(option) - 1).getPrice()) {
+                    System.out.println("You don't have enough credits to buy this. Please choose another one");
+                } else if (!option.equalsIgnoreCase("y") && coin >= products.get(Integer.parseInt(option) - 1).getPrice()) {
+                    System.out.println("Great!");
+                    System.out.printf("Here is your choice: %s%n", products.get(Integer.parseInt(option) - 1).getName());
+                    int refund = coin - products.get(Integer.parseInt(option) - 1).getPrice();
+                    if (refund > 0)
+                        System.out.printf("Your refund $%d%n", refund);
+                    System.out.println("Thanks!");
+                    break;
+                }
 
-            System.out.println("if you want to cancel press \"n\"");
-            if (scanned.hasNext())
-                option = scanned.next();
+                System.out.println("Choose ");
+                for (int i = 0; i < products.size(); i++) {
+                    item = i + 1;
+                    System.out.printf("%d %s $%d%n", item, products.get(i).getName(), products.get(i).getPrice());
+                }
+
+                System.out.println("if you want to cancel press \"n\"");
+                if (scanned.hasNext())
+                    option = scanned.next();
+            }
         }
     }
 
