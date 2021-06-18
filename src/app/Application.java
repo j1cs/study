@@ -64,6 +64,8 @@ public class Application {
                 if (option.equalsIgnoreCase("n")) {
                     if (coin > 0)
                         System.out.printf("Your refund $%d%n", coin);
+                    coin = 0;
+                    option = "0";
                     System.out.println("See ya!");
                     break;
                 } else if (!option.equalsIgnoreCase("y") && (Integer.parseInt(option) <= 1 && Integer.parseInt(option) >= item)) {
