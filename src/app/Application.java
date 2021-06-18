@@ -26,15 +26,14 @@ public class Application {
         Scanner scanned = new Scanner(System.in);
         String option = "0";
         int coin = 0;
-        while(!option.equalsIgnoreCase("exit")) {
-            clean();
-            System.out.println("Welcome!");
+        clean();
+        while(true) {
+            System.out.println("**************Welcome!**************");
             System.out.println("You can choose:");
             for (Product p : products) {
                 System.out.printf("%s $%d%n", p.getName(), p.getPrice());
             }
             String acceptedCoins = String.join(",", coinList);
-            System.out.println();
             System.out.println("Insert Coin");
             System.out.printf("We accepts: %s cents%n", acceptedCoins);
             while (true) {
@@ -60,6 +59,7 @@ public class Application {
                     option = scanned.next();
             }
             int item = 0;
+            clean();
             while (true) {
                 if (option.equalsIgnoreCase("n")) {
                     if (coin > 0)
@@ -76,6 +76,8 @@ public class Application {
                     int refund = coin - products.get(Integer.parseInt(option) - 1).getPrice();
                     if (refund > 0)
                         System.out.printf("Your refund $%d%n", refund);
+                    coin = 0;
+                    option = "0";
                     System.out.println("Thanks!");
                     break;
                 }
