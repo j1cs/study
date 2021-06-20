@@ -16,7 +16,8 @@ public class DispenseChange implements State {
     @Override
     public void dispenseChange(String productCode) {
         int refund = this.vendingMachine.calculateChange(productCode);
-        System.out.printf("$%d refunded%n", refund);
+        if (refund > 0)
+            System.out.printf("$%d refunded%n", refund);
         this.vendingMachine.setState(new DispenseItem(this.vendingMachine));
         this.vendingMachine.dispenseItem(productCode);
     }

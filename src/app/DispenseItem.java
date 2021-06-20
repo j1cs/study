@@ -26,6 +26,7 @@ public class DispenseItem implements State {
             this.vendingMachine.removeProduct(productCode);
             System.out.printf("Dispensing %s%n", product);
             this.vendingMachine.setCollectedCash(0);
+            this.vendingMachine.setState(new Ready(vendingMachine));
         } else {
             System.out.printf("You don't have enough cash: $%d for the product $%d. Please insert more%n", coins, price);
         }
