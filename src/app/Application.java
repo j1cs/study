@@ -26,14 +26,12 @@ public class Application {
             System.out.println("Insert Coin:");
             if (scanned.hasNextInt()) {
                 vendingMachine.addCollectedCash(scanned.nextInt());
+                System.out.printf("Inserted $%d%n", vendingMachine.getCollectedCash());
             }
             if (scanned.hasNextLine())
                 option = scanned.nextLine();
             if (option != null && option.equalsIgnoreCase("n")) {
                 vendingMachine.cancelTransaction();
-            }
-            if (!Pattern.matches("^[A-Z][0-9]$", option) && vendingMachine.getCollectedCash() > 0) {
-                System.out.printf("Inserted $%d%n", vendingMachine.getCollectedCash());
             }
             if (Pattern.matches("^[A-Z][0-9]$", option)) {
                 vendingMachine.dispenseChange(option);
