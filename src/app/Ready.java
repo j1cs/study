@@ -1,7 +1,7 @@
 package app;
 
 public class Ready implements State {
-    private VendingMachine vendingMachine;
+    private final VendingMachine vendingMachine;
 
     public Ready(VendingMachine vendingMachine) {
         this.vendingMachine = vendingMachine;

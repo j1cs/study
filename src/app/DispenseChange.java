@@ -2,7 +2,7 @@ package app;
 
 public class DispenseChange implements State {
 
-    private VendingMachine vendingMachine;
+    private final VendingMachine vendingMachine;
 
     public DispenseChange(VendingMachine vendingMachine) {
         this.vendingMachine = vendingMachine;

@@ -1,7 +1,7 @@
 package app;
 
 public class DispenseItem implements State {
-    private VendingMachine vendingMachine;
+    private final VendingMachine vendingMachine;
 
     public DispenseItem(VendingMachine vendingMachine) {
         this.vendingMachine = vendingMachine;
@@ -23,7 +23,6 @@ public class DispenseItem implements State {
         int price = this.vendingMachine.getProductPrices().get(productCode);
         String product = this.vendingMachine.getProductItems().get(productCode);
         if (coins >= price) {
-            this.vendingMachine.removeProduct(productCode);
             System.out.printf("Dispensing %s%n", product);
             this.vendingMachine.setCollectedCash(0);
             this.vendingMachine.setState(new Ready(vendingMachine));

@@ -9,11 +9,11 @@ import java.util.stream.Collectors;
 public class VendingMachine {
     private int collectedCash;
     private State state;
-    private List<Integer> acceptedCash = Arrays.asList(1, 5, 10, 25);
-    private Map<String, String> productItems = new LinkedHashMap<>((Map.of("A1", "Coke", "B2", "Pepsi", "C3", "Soda")));
-    private Map<String, Integer> productPrices = Map.of("A1", 25, "B2", 35, "C3", 45);
+    private final List<Integer> acceptedCash = Arrays.asList(1, 5, 10, 25);
+    private final Map<String, String> productItems = new LinkedHashMap<>((Map.of("A1", "Coke", "B2", "Pepsi", "C3", "Soda")));
+    private final Map<String, Integer> productPrices = Map.of("A1", 25, "B2", 35, "C3", 45);
 
-    private static VendingMachine vendingMachine = new VendingMachine();
+    private static final VendingMachine vendingMachine = new VendingMachine();
 
     public VendingMachine() {
     }
@@ -42,21 +42,12 @@ public class VendingMachine {
         }
     }
 
-    public VendingMachine setCollectedCash(int collectedCash) {
+    public void setCollectedCash(int collectedCash) {
         this.collectedCash = collectedCash;
-        return this;
     }
 
-    public State getState() {
-        return state;
-    }
-
-    public VendingMachine setState(State state) {
+    public void setState(State state) {
         this.state = state;
-        return this;
-    }
-
-    public void removeProduct(String productCode) {
     }
 
     public void dispenseChange(String productCode) {
